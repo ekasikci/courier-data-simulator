@@ -1,18 +1,20 @@
 package com.ekasikci.courierdatasimulator.kafka.service;
 
-import com.ekasikci.courierdatasimulator.kafka.dto.MappedPackage;
-import com.ekasikci.courierdatasimulator.kafka.entitiy.Package;
-import com.ekasikci.courierdatasimulator.kafka.repository.PackageRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.ekasikci.courierdatasimulator.kafka.dto.MappedPackage;
+import com.ekasikci.courierdatasimulator.kafka.entitiy.Package;
+import com.ekasikci.courierdatasimulator.kafka.repository.PackageRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
