@@ -1,0 +1,502 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.0)
+
+2025-12-06T18:46:49.270+03:00  INFO 78576 --- [CourierDataSimulator] [           main] c.e.c.kafka.KafkaApplication             : Starting KafkaApplication v0.0.1-SNAPSHOT using Java 21.0.9 with PID 78576 (/home/ekasikci/Projects/courier-data-simulator/target/courier-data-simulator-0.0.1-SNAPSHOT.jar started by ekasikci in /home/ekasikci/Projects/courier-data-simulator)
+2025-12-06T18:46:49.275+03:00  INFO 78576 --- [CourierDataSimulator] [           main] c.e.c.kafka.KafkaApplication             : No active profile set, falling back to 1 default profile: "default"
+2025-12-06T18:46:49.712+03:00  INFO 78576 --- [CourierDataSimulator] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-06T18:46:49.746+03:00  INFO 78576 --- [CourierDataSimulator] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 28 ms. Found 1 JPA repository interface.
+2025-12-06T18:46:50.091+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2025-12-06T18:46:50.099+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-06T18:46:50.099+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2025-12-06T18:46:50.114+03:00  INFO 78576 --- [CourierDataSimulator] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 807 ms
+2025-12-06T18:46:50.216+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-06T18:46:50.245+03:00  INFO 78576 --- [CourierDataSimulator] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2025-12-06T18:46:50.563+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-06T18:46:50.589+03:00  INFO 78576 --- [CourierDataSimulator] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-06T18:46:50.718+03:00  INFO 78576 --- [CourierDataSimulator] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:packagedb user=SA
+2025-12-06T18:46:50.719+03:00  INFO 78576 --- [CourierDataSimulator] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-06T18:46:50.733+03:00  WARN 78576 --- [CourierDataSimulator] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-06T18:46:50.746+03:00  INFO 78576 --- [CourierDataSimulator] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:packagedb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: PACKAGEDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-06T18:46:51.307+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists packages cascade 
+Hibernate: 
+    create table packages (
+        cancelled integer,
+        collected integer,
+        eta integer,
+        arrival_for_delivery_at timestamp(6),
+        arrival_for_pickup_at timestamp(6),
+        cancelled_at timestamp(6),
+        collected_at timestamp(6),
+        completed_at timestamp(6),
+        created_at timestamp(6),
+        customer_id bigint,
+        id bigint not null,
+        in_delivery_at timestamp(6),
+        last_updated_at timestamp(6),
+        order_id bigint,
+        origin_address_id bigint,
+        picked_up_at timestamp(6),
+        store_id bigint,
+        user_id bigint,
+        waiting_for_assignment_at timestamp(6),
+        cancel_reason varchar(255),
+        delivery_date varchar(255),
+        reassigned varchar(255),
+        status varchar(255),
+        type varchar(255),
+        primary key (id)
+    )
+2025-12-06T18:46:51.332+03:00  INFO 78576 --- [CourierDataSimulator] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-06T18:46:51.385+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-06T18:46:51.972+03:00  WARN 78576 --- [CourierDataSimulator] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-06T18:46:52.196+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.s.b.h.a.H2ConsoleAutoConfiguration     : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:packagedb'
+2025-12-06T18:46:52.299+03:00  INFO 78576 --- [CourierDataSimulator] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2025-12-06T18:46:52.307+03:00  INFO 78576 --- [CourierDataSimulator] [           main] c.e.c.kafka.KafkaApplication             : Started KafkaApplication in 3.299 seconds (process running for 3.603)
+2025-12-06T18:47:03.817+03:00  INFO 78576 --- [CourierDataSimulator] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-06T18:47:03.818+03:00  INFO 78576 --- [CourierDataSimulator] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-06T18:47:03.820+03:00  INFO 78576 --- [CourierDataSimulator] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-12-06T18:47:03.881+03:00  INFO 78576 --- [CourierDataSimulator] [nio-8080-exec-2] c.e.c.kafka.controller.KafkaController   : Received request to bootstrap all packages
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.arrival_for_delivery_at,
+        p1_0.arrival_for_pickup_at,
+        p1_0.cancel_reason,
+        p1_0.cancelled,
+        p1_0.cancelled_at,
+        p1_0.collected,
+        p1_0.collected_at,
+        p1_0.completed_at,
+        p1_0.created_at,
+        p1_0.customer_id,
+        p1_0.delivery_date,
+        p1_0.eta,
+        p1_0.in_delivery_at,
+        p1_0.last_updated_at,
+        p1_0.order_id,
+        p1_0.origin_address_id,
+        p1_0.picked_up_at,
+        p1_0.reassigned,
+        p1_0.status,
+        p1_0.store_id,
+        p1_0.type,
+        p1_0.user_id,
+        p1_0.waiting_for_assignment_at 
+    from
+        packages p1_0 
+    where
+        p1_0.cancelled=0 
+        or p1_0.cancelled is null
+2025-12-06T18:47:03.944+03:00  INFO 78576 --- [CourierDataSimulator] [nio-8080-exec-2] c.e.c.kafka.service.PackageService       : Found 4 non-cancelled packages
+2025-12-06T18:47:03.945+03:00  INFO 78576 --- [CourierDataSimulator] [nio-8080-exec-2] c.e.c.k.service.KafkaProducerService     : Sending 4 packages to Kafka topic: package-events
+2025-12-06T18:47:04.187+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:04.189+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:04.292+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:04.293+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:04.394+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:04.395+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:04.613+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:04.613+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:04.967+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:04.967+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:05.854+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:05.854+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:06.900+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:06.901+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:07.902+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:07.902+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:08.903+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:08.903+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:09.815+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:09.816+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:10.831+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:10.832+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:11.832+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:11.832+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:12.833+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:12.833+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:13.846+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:13.846+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:14.805+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:14.805+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:15.821+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:15.821+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:16.731+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:16.731+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:17.745+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:17.745+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:18.793+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:18.793+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:19.702+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:19.702+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:20.665+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:20.666+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:21.678+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:21.678+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:22.679+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:22.679+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:23.690+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:23.690+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:24.550+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:24.551+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:25.555+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:25.555+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:26.564+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:26.564+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:27.469+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:27.469+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:28.481+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:28.482+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:29.441+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:29.441+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:30.303+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:30.303+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:31.309+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:31.309+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:32.238+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:32.238+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:33.097+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:33.097+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:34.099+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:34.099+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:35.100+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:35.101+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:36.101+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:36.101+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:37.096+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:37.096+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:38.097+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:38.097+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:39.004+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:39.004+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:40.014+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:40.014+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:40.974+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:40.974+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:41.988+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:41.988+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:42.990+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:42.990+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:43.991+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:43.991+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:44.992+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:44.992+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:45.954+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:45.954+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:46.864+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:46.865+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:47.866+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:47.866+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:48.867+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:48.868+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:49.875+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:49.875+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:50.885+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:50.885+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:51.743+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:51.744+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:52.603+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:52.603+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:53.610+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:53.611+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:54.618+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:54.619+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:55.543+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:55.543+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:56.451+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:56.451+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:57.464+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:57.464+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:58.421+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:58.421+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:47:59.328+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:47:59.329+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:00.340+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:00.340+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:01.195+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:01.195+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:02.196+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:02.196+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:03.197+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:03.197+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:04.063+03:00 ERROR 78576 --- [CourierDataSimulator] [nio-8080-exec-2] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='19604181' and payload='MappedPackage(id=19604181, createdAt=2021-11-13 10:47:52.675248, lastUpdatedAt=2021-11-13 11:40:15.3...' to topic package-events:
+
+org.apache.kafka.common.errors.TimeoutException: Topic package-events not present in metadata after 60000 ms.
+
+2025-12-06T18:48:04.065+03:00 ERROR 78576 --- [CourierDataSimulator] [nio-8080-exec-2] c.e.c.k.service.KafkaProducerService     : Error sending package with id=19604181
+
+org.springframework.kafka.KafkaException: Send failed
+	at org.springframework.kafka.core.KafkaTemplate.doSend(KafkaTemplate.java:869) ~[spring-kafka-4.0.0.jar!/:4.0.0]
+	at org.springframework.kafka.core.KafkaTemplate.observeSend(KafkaTemplate.java:826) ~[spring-kafka-4.0.0.jar!/:4.0.0]
+	at org.springframework.kafka.core.KafkaTemplate.send(KafkaTemplate.java:607) ~[spring-kafka-4.0.0.jar!/:4.0.0]
+	at com.ekasikci.courierdatasimulator.kafka.service.KafkaProducerService.sendPackage(KafkaProducerService.java:34) ~[!/:0.0.1-SNAPSHOT]
+	at com.ekasikci.courierdatasimulator.kafka.service.KafkaProducerService.sendPackages(KafkaProducerService.java:62) ~[!/:0.0.1-SNAPSHOT]
+	at com.ekasikci.courierdatasimulator.kafka.controller.KafkaController.bootstrapAllPackages(KafkaController.java:93) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:633) ~[jakarta.servlet-api-6.1.0.jar!/:6.1.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:723) ~[jakarta.servlet-api-6.1.0.jar!/:6.1.0]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.14.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.apache.kafka.common.errors.TimeoutException: Topic package-events not present in metadata after 60000 ms.
+
+2025-12-06T18:48:04.218+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:04.219+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:05.226+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:05.227+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:06.227+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:06.228+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:07.134+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:07.135+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:08.042+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:08.042+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:09.043+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:09.043+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:10.025+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:10.025+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:10.833+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:10.833+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:11.841+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:11.841+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:12.798+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:12.798+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:13.808+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:13.808+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:14.803+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:14.804+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:15.813+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:15.814+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:16.822+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:16.822+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:17.847+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:17.848+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:18.807+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:18.807+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:19.817+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:19.817+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:20.774+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:20.774+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:21.775+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:21.775+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:22.783+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:22.783+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:23.789+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:23.789+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:24.769+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:24.769+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:25.777+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:25.778+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:26.633+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:26.633+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:27.484+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:27.484+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:28.485+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:28.485+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:29.486+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:29.486+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:30.488+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:30.488+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:31.496+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:31.497+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:32.352+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:32.352+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:33.303+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:33.303+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:34.160+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:34.161+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:35.112+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:35.112+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:35.971+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:35.971+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:36.972+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:36.972+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:37.973+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:37.973+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:39.023+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:39.023+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:40.041+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:40.042+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:41.042+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:41.042+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:42.000+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:42.000+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:43.002+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:43.002+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:44.003+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:44.003+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:44.861+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:44.861+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:45.870+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:45.871+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:46.871+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:46.871+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:47.902+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:47.902+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:48.759+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:48.759+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:49.762+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:49.762+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:50.722+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:50.722+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:51.724+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:51.724+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:52.709+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:52.709+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:53.617+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:53.617+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:54.618+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:54.618+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:55.626+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:55.626+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:56.531+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:56.531+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:57.389+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:57.389+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:57.968+03:00  INFO 78576 --- [CourierDataSimulator] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-06T18:48:58.296+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:58.296+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:48:59.306+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:48:59.306+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:00.351+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:00.351+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:01.253+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:01.254+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:02.253+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:02.253+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:03.212+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:03.213+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:04.067+03:00 ERROR 78576 --- [CourierDataSimulator] [nio-8080-exec-2] o.s.k.support.LoggingProducerListener    : Exception thrown when sending a message with key='19604182' and payload='MappedPackage(id=19604182, createdAt=2021-11-13 11:50:10.123456, lastUpdatedAt=2021-11-13 12:25:45.7...' to topic package-events:
+
+org.apache.kafka.common.errors.TimeoutException: Topic package-events not present in metadata after 60000 ms.
+
+2025-12-06T18:49:04.068+03:00 ERROR 78576 --- [CourierDataSimulator] [nio-8080-exec-2] c.e.c.k.service.KafkaProducerService     : Error sending package with id=19604182
+
+org.springframework.kafka.KafkaException: Send failed
+	at org.springframework.kafka.core.KafkaTemplate.doSend(KafkaTemplate.java:869) ~[spring-kafka-4.0.0.jar!/:4.0.0]
+	at org.springframework.kafka.core.KafkaTemplate.observeSend(KafkaTemplate.java:826) ~[spring-kafka-4.0.0.jar!/:4.0.0]
+	at org.springframework.kafka.core.KafkaTemplate.send(KafkaTemplate.java:607) ~[spring-kafka-4.0.0.jar!/:4.0.0]
+	at com.ekasikci.courierdatasimulator.kafka.service.KafkaProducerService.sendPackage(KafkaProducerService.java:34) ~[!/:0.0.1-SNAPSHOT]
+	at com.ekasikci.courierdatasimulator.kafka.service.KafkaProducerService.sendPackages(KafkaProducerService.java:62) ~[!/:0.0.1-SNAPSHOT]
+	at com.ekasikci.courierdatasimulator.kafka.controller.KafkaController.bootstrapAllPackages(KafkaController.java:93) ~[!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:633) ~[jakarta.servlet-api-6.1.0.jar!/:6.1.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.1.jar!/:7.0.1]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:723) ~[jakarta.servlet-api-6.1.0.jar!/:6.1.0]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.14.jar!/:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.1.jar!/:7.0.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.14.jar!/:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.apache.kafka.common.errors.TimeoutException: Topic package-events not present in metadata after 60000 ms.
+
+2025-12-06T18:49:04.221+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:04.221+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:05.079+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:05.079+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:06.086+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:06.086+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:07.094+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:07.094+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:08.137+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:08.137+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:09.138+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:09.138+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:10.139+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:10.139+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:11.047+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:11.048+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:12.048+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:12.048+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
+2025-12-06T18:49:12.905+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available.
+2025-12-06T18:49:12.905+03:00  WARN 78576 --- [CourierDataSimulator] [ator-producer-1] org.apache.kafka.clients.NetworkClient   : [Producer clientId=CourierDataSimulator-producer-1] Bootstrap broker localhost:9092 (id: -1 rack: null isFenced: false) disconnected
