@@ -1,0 +1,21 @@
+-- Sample package data for testing
+
+-- Package 1: Completed package (should be sent to Kafka)
+INSERT INTO packages (id, arrival_for_delivery_at, arrival_for_pickup_at, cancel_reason, cancelled, completed_at, created_at, customer_id, in_delivery_at, last_updated_at, eta, status, store_id, origin_address_id, type, waiting_for_assignment_at, user_id, collected, collected_at, cancelled_at, picked_up_at, reassigned, order_id, delivery_date)
+VALUES (19604181, '2021-11-13 11:05:58.045640', '2021-11-13 10:48:37.032078', NULL, 0, '2021-11-13 11:40:15.314340', '2021-11-13 10:47:52.675248', 20002011575015, '2021-11-13 11:05:56.861614', '2021-11-13 11:40:15.314340', 277, 'COMPLETED', 20000000004103, 999000020443388, 'REGULAR', '2021-11-13 10:47:52.675248', 50002010395213, 1, '2021-11-13 10:47:52.828692', NULL, '2021-11-13 10:49:50.278087', NULL, 123972783, '2021-11-13');
+
+-- Package 2: Another completed package (delivered on time)
+INSERT INTO packages (id, arrival_for_delivery_at, arrival_for_pickup_at, cancel_reason, cancelled, completed_at, created_at, customer_id, in_delivery_at, last_updated_at, eta, status, store_id, origin_address_id, type, waiting_for_assignment_at, user_id, collected, collected_at, cancelled_at, picked_up_at, reassigned, order_id, delivery_date)
+VALUES (19604182, '2021-11-13 12:10:30.123456', '2021-11-13 11:55:20.654321', NULL, 0, '2021-11-13 12:25:45.789012', '2021-11-13 11:50:10.123456', 20002011575016, '2021-11-13 12:10:28.456789', '2021-11-13 12:25:45.789012', 45, 'COMPLETED', 20000000004104, 999000020443389, 'EXPRESS', '2021-11-13 11:50:10.123456', 50002010395214, 1, '2021-11-13 11:50:10.234567', NULL, '2021-11-13 11:56:30.345678', NULL, 123972784, '2021-11-13');
+
+-- Package 3: Cancelled package (should NOT be sent to Kafka)
+INSERT INTO packages (id, arrival_for_delivery_at, arrival_for_pickup_at, cancel_reason, cancelled, completed_at, created_at, customer_id, in_delivery_at, last_updated_at, eta, status, store_id, origin_address_id, type, waiting_for_assignment_at, user_id, collected, collected_at, cancelled_at, picked_up_at, reassigned, order_id, delivery_date)
+VALUES (19604183, NULL, NULL, 'Customer requested cancellation', 1, NULL, '2021-11-13 13:00:00.000000', 20002011575017, NULL, '2021-11-13 13:05:00.000000', 60, 'CANCELLED', 20000000004105, 999000020443390, 'REGULAR', '2021-11-13 13:00:00.000000', 50002010395215, 0, NULL, '2021-11-13 13:05:00.000000', NULL, NULL, 123972785, '2021-11-13');
+
+-- Package 4: In-progress package (not completed - fields should be null)
+INSERT INTO packages (id, arrival_for_delivery_at, arrival_for_pickup_at, cancel_reason, cancelled, completed_at, created_at, customer_id, in_delivery_at, last_updated_at, eta, status, store_id, origin_address_id, type, waiting_for_assignment_at, user_id, collected, collected_at, cancelled_at, picked_up_at, reassigned, order_id, delivery_date)
+VALUES (19604184, NULL, '2021-11-13 14:20:15.123456', NULL, 0, NULL, '2021-11-13 14:00:00.000000', 20002011575018, NULL, '2021-11-13 14:20:15.123456', 90, 'IN_DELIVERY', 20000000004106, 999000020443391, 'REGULAR', '2021-11-13 14:00:00.000000', 50002010395216, 1, '2021-11-13 14:00:00.111111', NULL, '2021-11-13 14:15:30.222222', NULL, 123972786, '2021-11-13');
+
+-- Package 5: Completed but delivered late (order_in_time should be false)
+INSERT INTO packages (id, arrival_for_delivery_at, arrival_for_pickup_at, cancel_reason, cancelled, completed_at, created_at, customer_id, in_delivery_at, last_updated_at, eta, status, store_id, origin_address_id, type, waiting_for_assignment_at, user_id, collected, collected_at, cancelled_at, picked_up_at, reassigned, order_id, delivery_date)
+VALUES (19604185, '2021-11-13 15:45:00.000000', '2021-11-13 15:30:00.000000', NULL, 0, '2021-11-13 16:35:00.000000', '2021-11-13 15:00:00.000000', 20002011575019, '2021-11-13 15:45:00.000000', '2021-11-13 16:35:00.000000', 60, 'COMPLETED', 20000000004107, 999000020443392, 'REGULAR', '2021-11-13 15:00:00.000000', 50002010395217, 1, '2021-11-13 15:00:00.000000', NULL, '2021-11-13 15:35:00.000000', NULL, 123972787, '2021-11-13');
