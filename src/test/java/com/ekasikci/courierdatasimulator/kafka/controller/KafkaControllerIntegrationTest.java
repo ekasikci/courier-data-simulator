@@ -11,13 +11,15 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +75,6 @@ class KafkaControllerIntegrationTest {
         class SendSinglePackageTests {
 
                 @Test
-                @Order(1)
                 @DisplayName("Should successfully send completed package")
                 void shouldSuccessfullySendCompletedPackage() {
                         // Given
@@ -104,7 +105,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(2)
                 @DisplayName("Should reject cancelled package with 404")
                 void shouldRejectCancelledPackage() {
                         // Given
@@ -126,7 +126,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(3)
                 @DisplayName("Should handle non-existent package with 404")
                 void shouldHandleNonExistentPackage() {
                         // Given
@@ -145,7 +144,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(4)
                 @DisplayName("Should send in-progress package with null calculated fields")
                 void shouldSendInProgressPackage() {
                         // Given
@@ -171,7 +169,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(5)
                 @DisplayName("Should handle invalid package ID format")
                 void shouldHandleInvalidPackageIdFormat() {
                         given()
@@ -183,11 +180,10 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(6)
                 @DisplayName("Should verify calculated fields are correct")
                 void shouldVerifyCalculatedFields() {
                         // Given
-                        LocalDateTime created = LocalDateTime.of(2021, 11, 13, 10, 0, 0);
+                        LocalDateTime created = LocalDateTime.of(2025, 11, 13, 10, 0, 0);
                         Package pkg = createAndSavePackage(
                                         4L, "COMPLETED", 0,
                                         created,
@@ -211,11 +207,10 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(7)
                 @DisplayName("Should verify late delivery is marked correctly")
                 void shouldVerifyLateDelivery() {
                         // Given
-                        LocalDateTime created = LocalDateTime.of(2021, 11, 13, 10, 0, 0);
+                        LocalDateTime created = LocalDateTime.of(2025, 11, 13, 10, 0, 0);
                         Package pkg = createAndSavePackage(
                                         5L, "COMPLETED", 0,
                                         created,
@@ -242,7 +237,6 @@ class KafkaControllerIntegrationTest {
         class BootstrapTests {
 
                 @Test
-                @Order(10)
                 @DisplayName("Should successfully bootstrap all non-cancelled packages")
                 void shouldSuccessfullyBootstrapAllPackages() {
                         // Given - create 5 packages (3 completed, 1 cancelled, 1 in-progress)
@@ -285,7 +279,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(11)
                 @DisplayName("Should handle empty database gracefully")
                 void shouldHandleEmptyDatabase() {
                         // Given - no packages in database
@@ -303,7 +296,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(12)
                 @DisplayName("Should handle large batch efficiently")
                 void shouldHandleLargeBatch() {
                         // Given - create 100 packages
@@ -337,7 +329,6 @@ class KafkaControllerIntegrationTest {
                 }
 
                 @Test
-                @Order(13)
                 @DisplayName("Should only include non-cancelled packages")
                 void shouldOnlyIncludeNonCancelled() {
                         // Given
@@ -364,121 +355,119 @@ class KafkaControllerIntegrationTest {
                 }
         }
 
-        @Nested
-        @DisplayName("Error Handling and Edge Cases")
-        class ErrorHandlingTests {
+        @Test
+        @DisplayName("Should handle concurrent requests robustly")
+        void shouldHandleConcurrentRequests() throws Exception {
+                // Given
+                for (int i = 0; i < 10; i++) {
+                        createAndSavePackage(
+                                        3000L + i, "COMPLETED", 0,
+                                        LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+                }
 
-                @Test
-                @Order(20)
-                @DisplayName("Should handle concurrent requests")
-                void shouldHandleConcurrentRequests() throws Exception {
-                        // Given
-                        for (int i = 0; i < 10; i++) {
-                                createAndSavePackage(
-                                                3000L + i, "COMPLETED", 0,
-                                                LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
-                        }
+                List<Throwable> threadErrors = Collections.synchronizedList(new ArrayList<>());
+                Thread[] threads = new Thread[10];
 
-                        // When - send concurrent requests
-                        Thread[] threads = new Thread[10];
-                        for (int i = 0; i < 10; i++) {
-                                final long id = 3000L + i;
-                                threads[i] = new Thread(() -> {
+                // When - send concurrent requests
+                for (int i = 0; i < 10; i++) {
+                        final long id = 3000L + i;
+                        threads[i] = new Thread(() -> {
+                                try {
                                         given()
                                                         .contentType(ContentType.JSON)
                                                         .when()
                                                         .get("/kafka/send/{packageId}", id)
                                                         .then()
                                                         .statusCode(200);
-                                });
-                                threads[i].start();
-                        }
 
-                        // Wait for all threads
-                        for (Thread thread : threads) {
-                                thread.join();
-                        }
-
-                        // Then - all should succeed (verified by no exceptions)
+                                } catch (Throwable e) {
+                                        threadErrors.add(e);
+                                }
+                        });
+                        threads[i].start();
                 }
 
-                @Test
-                @Order(21)
-                @DisplayName("Should handle package with all null timestamps")
-                void shouldHandleAllNullTimestamps() {
-                        // Given
-                        Package pkg = new Package();
-                        pkg.setId(4000L);
-                        pkg.setStatus("PENDING");
-                        pkg.setCancelled(0);
-                        pkg.setEta(60);
-                        pkg.setCreatedAt(LocalDateTime.now());
-                        pkg.setLastUpdatedAt(LocalDateTime.now());
-                        packageRepository.save(pkg);
-
-                        // When & Then
-                        given()
-                                        .contentType(ContentType.JSON)
-                                        .when()
-                                        .get("/kafka/send/{packageId}", 4000L)
-                                        .then()
-                                        .statusCode(200)
-                                        .body("success", equalTo(true))
-                                        .body("data.collection_duration", nullValue())
-                                        .body("data.delivery_duration", nullValue())
-                                        .body("data.lead_time", nullValue());
+                // Wait for all threads
+                for (Thread thread : threads) {
+                        thread.join();
                 }
 
-                @Test
-                @Order(22)
-                @DisplayName("Should validate response content type")
-                void shouldValidateResponseContentType() {
-                        // Given
-                        createAndSavePackage(
-                                        5000L, "COMPLETED", 0,
-                                        LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+                // Then - Check if any thread recorded an error
+                Assertions.assertTrue((threadErrors).isEmpty());
+        }
 
-                        // When & Then
-                        given()
-                                        .contentType(ContentType.JSON)
-                                        .when()
-                                        .get("/kafka/send/{packageId}", 5000L)
-                                        .then()
-                                        .statusCode(200)
-                                        .contentType(ContentType.JSON);
-                }
+        @Test
+        @DisplayName("Should handle package with all null timestamps")
+        void shouldHandleAllNullTimestamps() {
+                // Given
+                Package pkg = new Package();
+                pkg.setId(4000L);
+                pkg.setStatus("PENDING");
+                pkg.setCancelled(0);
+                pkg.setEta(60);
+                pkg.setCreatedAt(LocalDateTime.now());
+                pkg.setLastUpdatedAt(LocalDateTime.now());
+                packageRepository.save(pkg);
 
-                @Test
-                @Order(23)
-                @DisplayName("Should handle very large package IDs")
-                void shouldHandleVeryLargePackageIds() {
-                        // Given
-                        Long largeId = Long.MAX_VALUE - 1;
-                        createAndSavePackage(
-                                        largeId, "COMPLETED", 0,
-                                        LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+                // When & Then
+                given()
+                                .contentType(ContentType.JSON)
+                                .when()
+                                .get("/kafka/send/{packageId}", 4000L)
+                                .then()
+                                .statusCode(200)
+                                .body("success", equalTo(true))
+                                .body("data.collection_duration", nullValue())
+                                .body("data.delivery_duration", nullValue())
+                                .body("data.lead_time", nullValue());
+        }
 
-                        // When & Then
-                        given()
-                                        .contentType(ContentType.JSON)
-                                        .when()
-                                        .get("/kafka/send/{packageId}", largeId)
-                                        .then()
-                                        .statusCode(200)
-                                        .body("success", equalTo(true));
-                }
+        @Test
+        @DisplayName("Should validate response content type")
+        void shouldValidateResponseContentType() {
+                // Given
+                createAndSavePackage(
+                                5000L, "COMPLETED", 0,
+                                LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
 
-                @Test
-                @Order(24)
-                @DisplayName("Should handle negative package IDs")
-                void shouldHandleNegativePackageIds() {
-                        given()
-                                        .contentType(ContentType.JSON)
-                                        .when()
-                                        .get("/kafka/send/{packageId}", -1L)
-                                        .then()
-                                        .statusCode(404);
-                }
+                // When & Then
+                given()
+                                .contentType(ContentType.JSON)
+                                .when()
+                                .get("/kafka/send/{packageId}", 5000L)
+                                .then()
+                                .statusCode(200)
+                                .contentType(ContentType.JSON);
+        }
+
+        @Test
+        @DisplayName("Should handle very large package IDs")
+        void shouldHandleVeryLargePackageIds() {
+                // Given
+                Long largeId = Long.MAX_VALUE - 1;
+                createAndSavePackage(
+                                largeId, "COMPLETED", 0,
+                                LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now());
+
+                // When & Then
+                given()
+                                .contentType(ContentType.JSON)
+                                .when()
+                                .get("/kafka/send/{packageId}", largeId)
+                                .then()
+                                .statusCode(200)
+                                .body("success", equalTo(true));
+        }
+
+        @Test
+        @DisplayName("Should handle negative package IDs")
+        void shouldHandleNegativePackageIds() {
+                given()
+                                .contentType(ContentType.JSON)
+                                .when()
+                                .get("/kafka/send/{packageId}", -1L)
+                                .then()
+                                .statusCode(404);
         }
 
         // Helper method

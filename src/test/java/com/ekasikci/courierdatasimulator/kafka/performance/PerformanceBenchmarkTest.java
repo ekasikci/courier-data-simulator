@@ -21,7 +21,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +90,6 @@ class PerformanceBenchmarkTest {
     class ThroughputBenchmarks {
 
         @Test
-        @Order(1)
         @DisplayName("Benchmark: Single package processing")
         void benchmarkSinglePackageProcessing() {
             String testName = "Single Package Processing";
@@ -128,28 +126,24 @@ class PerformanceBenchmarkTest {
         }
 
         @Test
-        @Order(2)
         @DisplayName("Benchmark: Batch processing (10 packages)")
         void benchmarkBatchProcessing10() {
             benchmarkBatchProcessing("Batch Processing (10 packages)", 10, 100);
         }
 
         @Test
-        @Order(3)
         @DisplayName("Benchmark: Batch processing (50 packages)")
         void benchmarkBatchProcessing50() {
             benchmarkBatchProcessing("Batch Processing (50 packages)", 50, 50);
         }
 
         @Test
-        @Order(4)
         @DisplayName("Benchmark: Batch processing (100 packages)")
         void benchmarkBatchProcessing100() {
             benchmarkBatchProcessing("Batch Processing (100 packages)", 100, 20);
         }
 
         @Test
-        @Order(5)
         @DisplayName("Benchmark: Batch processing (500 packages)")
         void benchmarkBatchProcessing500() {
             benchmarkBatchProcessing("Batch Processing (500 packages)", 500, 10);
@@ -193,7 +187,6 @@ class PerformanceBenchmarkTest {
     class LatencyBenchmarks {
 
         @Test
-        @Order(10)
         @DisplayName("Benchmark: Database query latency")
         void benchmarkDatabaseQueryLatency() {
             String testName = "Database Query Latency";
@@ -218,7 +211,6 @@ class PerformanceBenchmarkTest {
         }
 
         @Test
-        @Order(11)
         @DisplayName("Benchmark: Transformation latency")
         void benchmarkTransformationLatency() {
             String testName = "Transformation Latency";
@@ -241,7 +233,6 @@ class PerformanceBenchmarkTest {
         }
 
         @Test
-        @Order(12)
         @DisplayName("Benchmark: Kafka publishing latency")
         void benchmarkKafkaPublishingLatency() {
             String testName = "Kafka Publishing Latency";
@@ -266,7 +257,6 @@ class PerformanceBenchmarkTest {
         }
 
         @Test
-        @Order(13)
         @DisplayName("Benchmark: End-to-end latency")
         void benchmarkEndToEndLatency() {
             String testName = "End-to-End Latency (DB -> Kafka)";
@@ -300,14 +290,12 @@ class PerformanceBenchmarkTest {
     class ConcurrencyBenchmarks {
 
         @Test
-        @Order(20)
         @DisplayName("Benchmark: Concurrent processing (10 threads)")
         void benchmarkConcurrent10Threads() throws Exception {
             benchmarkConcurrentProcessing("Concurrent Processing (10 threads)", 10, 100);
         }
 
         @Test
-        @Order(21)
         @DisplayName("Benchmark: Concurrent processing (50 threads)")
         void benchmarkConcurrent50Threads() throws Exception {
             benchmarkConcurrentProcessing("Concurrent Processing (50 threads)", 50, 100);
@@ -385,7 +373,6 @@ class PerformanceBenchmarkTest {
     class MemoryBenchmarks {
 
         @Test
-        @Order(30)
         @DisplayName("Benchmark: Memory usage patterns")
         void benchmarkMemoryUsagePatterns() {
             String testName = "Memory Usage Patterns";

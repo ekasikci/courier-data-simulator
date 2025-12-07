@@ -23,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Timeout;
@@ -110,15 +109,14 @@ class KafkaIntegrationTest {
     class SinglePackageTests {
 
         @Test
-        @Order(1)
         @DisplayName("Should successfully publish completed package to Kafka")
         void shouldPublishCompletedPackageToKafka() throws Exception {
             // Given
             Package pkg = createAndSavePackage(
                     1001L,
-                    LocalDateTime.of(2021, 11, 13, 10, 0, 0, 0),
-                    LocalDateTime.of(2021, 11, 13, 10, 15, 0, 0),
-                    LocalDateTime.of(2021, 11, 13, 10, 45, 0, 0),
+                    LocalDateTime.of(2025, 11, 13, 10, 0, 0, 0),
+                    LocalDateTime.of(2025, 11, 13, 10, 15, 0, 0),
+                    LocalDateTime.of(2025, 11, 13, 10, 45, 0, 0),
                     "COMPLETED",
                     0,
                     60);
@@ -141,7 +139,6 @@ class KafkaIntegrationTest {
         }
 
         @Test
-        @Order(2)
         @DisplayName("Should not publish cancelled package")
         void shouldNotPublishCancelledPackage() {
             // Given
@@ -162,7 +159,6 @@ class KafkaIntegrationTest {
         }
 
         @Test
-        @Order(3)
         @DisplayName("Should publish in-progress package with null calculated fields")
         void shouldPublishInProgressPackage() throws Exception {
             // Given
@@ -198,7 +194,6 @@ class KafkaIntegrationTest {
     class BatchPublishingTests {
 
         @Test
-        @Order(10)
         @DisplayName("Should publish multiple packages in batch")
         void shouldPublishMultiplePackagesInBatch() throws Exception {
             // Given - create 5 packages
@@ -231,7 +226,6 @@ class KafkaIntegrationTest {
         }
 
         @Test
-        @Order(11)
         @DisplayName("Should filter cancelled packages in batch operation")
         void shouldFilterCancelledInBatch() throws Exception {
             // Given - 3 completed, 2 cancelled
@@ -268,15 +262,14 @@ class KafkaIntegrationTest {
     class MessageFormatTests {
 
         @Test
-        @Order(20)
         @DisplayName("Should produce valid JSON messages")
         void shouldProduceValidJsonMessages() throws Exception {
             // Given - package with microseconds
             Package pkg = createAndSavePackage(
                     4000L,
-                    LocalDateTime.of(2021, 11, 13, 10, 47, 52, 675248000),
-                    LocalDateTime.of(2021, 11, 13, 10, 49, 50, 278087000),
-                    LocalDateTime.of(2021, 11, 13, 11, 40, 15, 314340000),
+                    LocalDateTime.of(2025, 11, 13, 10, 47, 52, 675248000),
+                    LocalDateTime.of(2025, 11, 13, 10, 49, 50, 278087000),
+                    LocalDateTime.of(2025, 11, 13, 11, 40, 15, 314340000),
                     "COMPLETED",
                     0,
                     277);
@@ -306,7 +299,6 @@ class KafkaIntegrationTest {
         }
 
         @Test
-        @Order(21)
         @DisplayName("Should use package ID as message key")
         void shouldUsePackageIdAsKey() throws Exception {
             // Given
@@ -340,7 +332,6 @@ class KafkaIntegrationTest {
     class PerformanceTests {
 
         @Test
-        @Order(30)
         @DisplayName("Should handle high volume of messages")
         @Timeout(value = 30, unit = TimeUnit.SECONDS)
         void shouldHandleHighVolume() throws Exception {
@@ -376,11 +367,10 @@ class KafkaIntegrationTest {
             List<MappedPackage> consumed = consumeMultipleMessages(
                     packageCount,
                     Duration.ofSeconds(15));
-            assertThat(consumed).hasSizeGreaterThanOrEqualTo(packageCount);
+            assertThat(consumed).hasSize(packageCount);
         }
 
         @Test
-        @Order(31)
         @DisplayName("Should handle concurrent publishing")
         void shouldHandleConcurrentPublishing() throws Exception {
             // Given
@@ -429,7 +419,7 @@ class KafkaIntegrationTest {
             List<MappedPackage> consumed = consumeMultipleMessages(
                     threadCount,
                     Duration.ofSeconds(10));
-            assertThat(consumed).hasSizeGreaterThanOrEqualTo(threadCount);
+            assertThat(consumed).hasSize(threadCount);
         }
     }
 
