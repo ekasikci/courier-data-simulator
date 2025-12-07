@@ -26,6 +26,10 @@ import com.ekasikci.courierdatasimulator.kafka.dto.MappedPackage;
 import com.ekasikci.courierdatasimulator.kafka.entitiy.Package;
 import com.ekasikci.courierdatasimulator.kafka.repository.PackageRepository;
 
+/**
+ * Comprehensive unit tests for PackageService
+ * Tests all business logic, edge cases, and error scenarios
+ */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("PackageService Unit Tests")
 class PackageServiceTest {
