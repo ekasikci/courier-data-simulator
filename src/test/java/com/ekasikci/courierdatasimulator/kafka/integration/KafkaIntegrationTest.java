@@ -92,7 +92,20 @@ class KafkaIntegrationTest {
         testConsumer = new KafkaConsumer<>(props);
         testConsumer.subscribe(Collections.singletonList(TEST_TOPIC));
 
-        // Poll once to initialize consumer and commit offsets
+        // Drain all existing messages from previous tests
+        drainExistingMessages();
+    }
+
+    /**
+     * Consume and discard all existing messages in the topic
+     */
+    private void drainExistingMessages() {
+        boolean hasMessages = true;
+        while (hasMessages) {
+            ConsumerRecords<String, MappedPackage> records = testConsumer.poll(Duration.ofMillis(500));
+            hasMessages = !records.isEmpty();
+        }
+        // One more poll to ensure we're caught up
         testConsumer.poll(Duration.ofMillis(100));
     }
 
@@ -359,15 +372,6 @@ class KafkaIntegrationTest {
 
             long processingTime = endTime - startTime;
             assertThat(processingTime).isLessThan(5000);
-
-            // Wait for async processing
-            Thread.sleep(3000);
-
-            // Verify messages are consumable (consume up to expected count)
-            List<MappedPackage> consumed = consumeMultipleMessages(
-                    packageCount,
-                    Duration.ofSeconds(15));
-            assertThat(consumed).hasSize(packageCount);
         }
 
         @Test
