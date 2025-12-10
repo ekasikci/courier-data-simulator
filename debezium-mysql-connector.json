@@ -25,6 +25,6 @@
     "value.converter.schemas.enable": "false",
     "snapshot.mode": "initial",
     "tombstones.on.delete": "false",
-    "time.precision.mode": "connect"
+    "time.precision.mode": "adaptive_time_microseconds"
   }
 }
