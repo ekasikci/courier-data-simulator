@@ -7,7 +7,6 @@ import lombok.Data;
 
 /**
  * Configuration for data generation and simulation
- * All values can be changed in application.properties
  */
 @Configuration
 @ConfigurationProperties(prefix = "data.generation")

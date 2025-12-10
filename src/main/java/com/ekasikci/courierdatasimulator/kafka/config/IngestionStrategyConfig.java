@@ -7,7 +7,6 @@ import lombok.Data;
 
 /**
  * Configuration for ingestion strategy (Batch/MicroBatch/Streaming)
- * Change ingestion.strategy in application.properties to switch modes
  */
 @Configuration
 @ConfigurationProperties(prefix = "ingestion")

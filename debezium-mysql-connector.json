@@ -1,0 +1,30 @@
+{
+  "name": "mysql-package-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "tasks.max": "1",
+    "database.hostname": "mysql-db",
+    "database.port": "3306",
+    "database.user": "dbuser",
+    "database.password": "dbpass",
+    "database.server.id": "184054",
+    "database.server.name": "dbserver",
+    "topic.prefix": "dbserver",
+    "database.include.list": "package_db",
+    "table.include.list": "package_db.packages",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+    "schema.history.internal.kafka.topic": "schema-changes.packages",
+    "include.schema.changes": "false",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "false",
+    "transforms.unwrap.delete.handling.mode": "rewrite",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "snapshot.mode": "initial",
+    "tombstones.on.delete": "false",
+    "time.precision.mode": "connect"
+  }
+}

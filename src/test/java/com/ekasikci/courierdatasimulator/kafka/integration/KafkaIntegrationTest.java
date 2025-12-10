@@ -28,6 +28,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -72,12 +73,18 @@ class KafkaIntegrationTest {
     private KafkaProducerService kafkaProducerService;
 
     private KafkaConsumer<String, MappedPackage> testConsumer;
-    private static final String TEST_TOPIC = "package-events";
+
+    private String testTopic;
+
+    @Autowired
+    private Environment env;
 
     @BeforeEach
     void setUp() {
         // Clean database
         packageRepository.deleteAll();
+
+        this.testTopic = env.getProperty("kafka.topic.packages");
 
         // Create NEW consumer for EACH test with unique group ID
         Properties props = new Properties();
@@ -90,7 +97,7 @@ class KafkaIntegrationTest {
         props.put(JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, MappedPackage.class.getName());
 
         testConsumer = new KafkaConsumer<>(props);
-        testConsumer.subscribe(Collections.singletonList(TEST_TOPIC));
+        testConsumer.subscribe(Collections.singletonList(testTopic));
 
         // Drain all existing messages from previous tests
         drainExistingMessages();

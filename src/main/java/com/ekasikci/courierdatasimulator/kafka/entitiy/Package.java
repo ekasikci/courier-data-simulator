@@ -7,12 +7,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "packages")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Package {
@@ -82,7 +84,7 @@ public class Package {
     private LocalDateTime pickedUpAt;
 
     @Column(name = "reassigned")
-    private String reassigned;
+    private Integer reassigned;
 
     @Column(name = "order_id")
     private Long orderId;
