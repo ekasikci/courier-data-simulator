@@ -24,7 +24,6 @@
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": "false",
     "snapshot.mode": "initial",
-    "tombstones.on.delete": "false",
     "time.precision.mode": "adaptive_time_microseconds"
   }
 }

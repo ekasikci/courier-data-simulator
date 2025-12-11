@@ -13,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MappedPackageConsumer {
 
-    @KafkaListener(topics = "${app.kafka.topics.mapped-packages}", groupId = "mapped-package-verification-consumer")
-    public void consumeMappedPackage(MappedPackage mappedPackage) { // Changed from String to MappedPackage
+    @KafkaListener(topics = "${app.kafka.topics.mapped-packages}", groupId = "mapped-package-verification-consumer", containerFactory = "mappedPackageKafkaListenerFactory")
+    public void consumeMappedPackage(MappedPackage mappedPackage) {
         log.info("========================================");
         log.info("✅ CDC Pipeline Output Received");
         log.info("========================================");

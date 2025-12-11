@@ -46,7 +46,7 @@ public class DataIngestionOrchestrator {
         log.info("Ingestion Strategy: {}", ingestionConfig.getStrategy());
 
         if (!dataConfig.isEnabled()) {
-            log.warn("⚠ Data generation is DISABLED. Exiting orchestrator.");
+            log.info("⚠ Data generation is DISABLED. Exiting orchestrator.");
             return;
         }
 
@@ -55,7 +55,7 @@ public class DataIngestionOrchestrator {
         }
 
         if (!ingestionConfig.isEnabled()) {
-            log.warn("⚠ Ingestion is DISABLED");
+            log.info("⚠ Ingestion is DISABLED");
         }
 
         if ("BATCH".equalsIgnoreCase(ingestionConfig.getStrategy())) {
@@ -76,12 +76,6 @@ public class DataIngestionOrchestrator {
         if (!"BATCH".equalsIgnoreCase(ingestionConfig.getStrategy()) || !dataConfig.isEnabled()) {
             return;
         }
-
-        IngestionStrategy strategy = getActiveStrategy();
-        if (strategy == null) {
-            return;
-        }
-
         log.info("========== BATCH INGESTION CYCLE START ==========");
 
         List<Package> packages = getPackages();
