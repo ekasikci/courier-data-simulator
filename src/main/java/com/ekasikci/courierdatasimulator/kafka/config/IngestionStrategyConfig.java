@@ -14,9 +14,14 @@ import lombok.Data;
 public class IngestionStrategyConfig {
 
     /**
+     * Enable/disable ingestion
+     */
+    private boolean enabled = false;
+
+    /**
      * Ingestion strategy: BATCH, MICROBATCH, or STREAMING
      */
-    private String strategy = "BATCH";
+    private String strategy = "MICROBATCH";
 
     /**
      * Batch configuration

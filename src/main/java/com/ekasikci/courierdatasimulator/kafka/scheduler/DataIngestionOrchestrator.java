@@ -42,21 +42,29 @@ public class DataIngestionOrchestrator {
         log.info("Data Generation: {}", dataConfig.isEnabled() ? "ENABLED" : "DISABLED");
         log.info("Traffic Pattern: {}", dataConfig.getPattern());
         log.info("Base Rate: {} packages/second", dataConfig.getBaseRate());
+        log.info("Ingestion Enabled: {}", ingestionConfig.isEnabled());
         log.info("Ingestion Strategy: {}", ingestionConfig.getStrategy());
 
-        if ("BATCH".equals(ingestionConfig.getStrategy())) {
+        if (!dataConfig.isEnabled()) {
+            log.warn("⚠ Data generation is DISABLED. Exiting orchestrator.");
+            return;
+        }
+
+        if (dataConfig.isEnabled()) {
+            log.info("✓ Data generation is ENABLED");
+        }
+
+        if (!ingestionConfig.isEnabled()) {
+            log.warn("⚠ Ingestion is DISABLED");
+        }
+
+        if ("BATCH".equalsIgnoreCase(ingestionConfig.getStrategy())) {
             log.info("Batch Interval: {} minutes", ingestionConfig.getBatch().getIntervalMinutes());
-        } else if ("MICROBATCH".equals(ingestionConfig.getStrategy())) {
+        } else if ("MICROBATCH".equalsIgnoreCase(ingestionConfig.getStrategy())) {
             log.info("Micro-batch Interval: {} seconds", ingestionConfig.getMicrobatch().getIntervalSeconds());
         }
 
         log.info("=".repeat(80));
-
-        if (dataConfig.isEnabled()) {
-            log.info("✓ Data generation will start automatically");
-        } else {
-            log.info("⚠ Data generation is DISABLED. Enable with: data.generation.enabled=true");
-        }
     }
 
     /**
@@ -65,7 +73,7 @@ public class DataIngestionOrchestrator {
      */
     @Scheduled(initialDelayString = "${ingestion.batch.interval-minutes}000", fixedRateString = "${ingestion.batch.interval-minutes}0000")
     public void batchIngestion() {
-        if (!"BATCH".equalsIgnoreCase(ingestionConfig.getStrategy())) {
+        if (!"BATCH".equalsIgnoreCase(ingestionConfig.getStrategy()) || !dataConfig.isEnabled()) {
             return;
         }
 
@@ -76,14 +84,8 @@ public class DataIngestionOrchestrator {
 
         log.info("========== BATCH INGESTION CYCLE START ==========");
 
-        // Generate or fetch packages
         List<Package> packages = getPackages();
-
-        if (!packages.isEmpty()) {
-            strategy.ingest(packages);
-        } else {
-            log.info("No packages to process in this batch cycle");
-        }
+        ingestIfEnabled(packages);
 
         log.info("========== BATCH INGESTION CYCLE END ==========");
     }
@@ -94,20 +96,12 @@ public class DataIngestionOrchestrator {
      */
     @Scheduled(initialDelay = 1000, fixedRateString = "${ingestion.microbatch.interval-seconds}000")
     public void microBatchIngestion() {
-        if (!"MICROBATCH".equalsIgnoreCase(ingestionConfig.getStrategy())) {
-            return;
-        }
-
-        IngestionStrategy strategy = getActiveStrategy();
-        if (strategy == null) {
+        if (!"MICROBATCH".equalsIgnoreCase(ingestionConfig.getStrategy()) || !dataConfig.isEnabled()) {
             return;
         }
 
         List<Package> packages = getPackages();
-
-        if (!packages.isEmpty()) {
-            strategy.ingest(packages);
-        }
+        ingestIfEnabled(packages);
     }
 
     /**
@@ -116,18 +110,21 @@ public class DataIngestionOrchestrator {
      */
     @Scheduled(fixedRate = 100) // Check every 100ms for new packages
     public void streamingIngestion() {
-        if (!"STREAMING".equalsIgnoreCase(ingestionConfig.getStrategy())) {
-            return;
-        }
-
-        IngestionStrategy strategy = getActiveStrategy();
-        if (strategy == null) {
+        if (!"STREAMING".equalsIgnoreCase(ingestionConfig.getStrategy()) || !dataConfig.isEnabled()) {
             return;
         }
 
         List<Package> packages = getPackages();
+        ingestIfEnabled(packages);
+    }
 
-        if (!packages.isEmpty()) {
+    private void ingestIfEnabled(List<Package> packages) {
+        if (!ingestionConfig.isEnabled()) {
+            return;
+        }
+
+        IngestionStrategy strategy = getActiveStrategy();
+        if (strategy != null && !packages.isEmpty()) {
             strategy.ingest(packages);
         }
     }
@@ -162,7 +159,7 @@ public class DataIngestionOrchestrator {
     }
 
     /**
-     * Manual trigger endpoint (useful for testing)
+     * Manual trigger endpoint (
      */
     public void manualTrigger() {
         log.info("Manual ingestion trigger activated");
