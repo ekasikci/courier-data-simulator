@@ -1,6 +1,6 @@
 # Courier Data Simulator - Data Engineering Case Study
 
-A Spring Boot application demonstrating real-time data ingestion patterns with Apache Kafka, featuring Change Data Capture (CDC) with Debezium and stream processing with Kafka Streams.
+A scalable, event-driven data pipeline built with Spring Boot, using Debezium CDC for real-time MySQL changes and Kafka Streams for continuous event processing, with optional manual ingestion via REST endpoints and custom strategies.
 
 ## 📋 Table of Contents
 
