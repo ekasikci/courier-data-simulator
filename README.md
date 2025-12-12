@@ -5,7 +5,7 @@ A Spring Boot application demonstrating real-time data ingestion patterns with A
 ## 📋 Table of Contents
 
 - [Overview](#overview)
-- [Architecture](#architecture)
+- [Architectures](#architectures)
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
@@ -14,6 +14,7 @@ A Spring Boot application demonstrating real-time data ingestion patterns with A
 - [Configuration Profiles](#configuration-profiles)
 - [Testing](#testing)
 - [Monitoring](#monitoring)
+- [Data Flow](#data-flow)
 - [Troubleshooting](#troubleshooting)
 
 ## 🎯 Overview
@@ -24,14 +25,17 @@ This project implements a complete data pipeline for package delivery tracking:
 2. **Data Generation** - Automated package creation with configurable traffic patterns
 3. **CDC Pipeline** - Real-time change capture from MySQL using Debezium
 4. **Stream Processing** - Transform and filter CDC events using Kafka Streams
-5. **Exactly-Once Semantics** - End-to-end transactional guarantees
 
-## 🏗️ Architecture
+## 🏗️ Architectures
+
+This project implements two parallel ingestion paths: the **Automated CDC Stream** and the **Manual Ingestion Path**.
+
+### Automated CDC Stream
 
 ```
 MySQL Database
     ↓ (CDC - Debezium)
-Kafka Topic: dbserver.package_db.packages
+Kafka Topic (Raw CDC): dbserver.package_db.packages
     ↓ (Kafka Streams Processing)
     ↓ (Filter cancelled, Transform to MappedPackage)
 Kafka Topic: cdc-mapped-packages
@@ -39,13 +43,15 @@ Kafka Topic: cdc-mapped-packages
 Application Consumer
 ```
 
-### Key Components
+### Manual Ingestion Path
 
-- **MySQL** - Source database with package data
-- **Debezium** - CDC connector for MySQL
-- **Kafka** - Message broker
-- **Kafka Streams** - Real-time stream processing
-- **Spring Boot** - Application framework
+```
+MySQL Database
+    ↓ (JPA Query with REST Endpoints & Ingestion Strategies)
+Package Object
+    ↓ (Filter cancelled, Transform to MappedPackage)
+Kafka Topic: mapped-package
+```
 
 ## ✨ Features
 
@@ -58,14 +64,13 @@ Application Consumer
 
 ### Extended Features
 
-- **Change Data Capture** - Real-time MySQL CDC with Debezium
-- **Kafka Streams** - Automated transformation pipeline
+- **Data Generation** - Configurable traffic patterns (constant, mornin rush, spike, realistic, black friday)
 - **Multiple Ingestion Strategies**:
   - Batch
   - Micro-batch
   - Streaming
-- **Data Generation** - Configurable traffic patterns (constant, burst, gradual, spike, random)
-- **Exactly-Once Processing** - Transaction support across all components
+- **Change Data Capture** - Real-time MySQL CDC with Debezium
+- **Kafka Streams** - Automated transformation pipeline
 
 ## 📦 Prerequisites
 
@@ -198,7 +203,7 @@ mvn test
 # Integration tests
 mvn test -Dtest=KafkaIntegrationTest
 
-# Performance benchmarks
+# Service test
 mvn test -Dtest=PackageServiceTest
 
 # Controller tests
@@ -213,8 +218,8 @@ mvn test -Dtest=KafkaControllerIntegrationTest
 # List topics
 curl http://localhost:8080/api/clusters/local/topics
 
-# View messages in Kafka UI
-# Navigate to: http://localhost:8080
+# View messages in Kafka UI, navigate to:
+http://localhost:8080
 ```
 
 ### Check Debezium Connector Status
@@ -231,16 +236,14 @@ curl http://localhost:8083/connectors/mysql-package-connector/status | jq
 2. **CDC Capture**: Debezium captures changes and publishes to `dbserver.package_db.packages`
 3. **Stream Processing**: The Kafka Streams Application consumes the raw CDC events, filters out unwanted records (e.g., deleted/canceled), and performs the required logic to transform the event data into the MappedPackage format.
 4. **Output**: Transformed messages published to `cdc-mapped-packages` topic.
-5. **Consumption**: Application consumer processes final messages
+5. **Consumption**: Application consumer logs final messages
 
 ### Manual Ingestion Path
 
 1. **Package Creation**: Packages are created and inserted in MySQL (via the data generator or manual).
-
-2. **REST Endpoints**: Manual trigger via `/kafka/send/{packageId}`, `/kafka/bootstrap` or ingestion strategies.
-3. **Application/JPA**: Executes SQL query to fetch Package data from MySQL.
-4. **Application Logic**: Performs filtering and transformation into MappedPackage format.
-5. **Kafka**: Transformed message published directly to `mapped-package` topic.
+2. **Application/JPA**: Executes SQL query to fetch Package data from MySQL. Manual trigger via `/kafka/send/{packageId}`, `/kafka/bootstrap` or ingestion strategies.
+3. **Application Logic**: Performs filtering and transformation into MappedPackage format.
+4. **Kafka**: Transformed message published directly to `mapped-package` topic.
 
 ## 🛠️ Troubleshooting
 
