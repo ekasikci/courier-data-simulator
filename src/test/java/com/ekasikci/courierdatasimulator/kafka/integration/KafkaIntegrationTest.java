@@ -45,7 +45,6 @@ import com.ekasikci.courierdatasimulator.kafka.service.PackageService;
 
 /**
  * Full integration tests using Testcontainers for Kafka
- * FIXED: Proper test isolation and message consumption
  */
 @SpringBootTest
 @Testcontainers
@@ -60,6 +59,7 @@ class KafkaIntegrationTest {
     @DynamicPropertySource
     static void overrideProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers);
+        registry.add("spring.kafka.streams.bootstrap-servers", kafka::getBootstrapServers);
         registry.add("scheduler.sync.enabled", () -> "false");
     }
 

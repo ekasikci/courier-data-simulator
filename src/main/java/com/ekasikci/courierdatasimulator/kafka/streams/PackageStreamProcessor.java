@@ -55,7 +55,7 @@ public class PackageStreamProcessor {
                 // Filter out nulls (parse failures)
                 .filter((key, pkg) -> pkg != null)
 
-                // Filter out cancelled packages
+                // Filter out canceled packages
                 .filter((key, pkg) -> !pkg.isCancelled())
 
                 // Log incoming packages (optional, for debugging)
