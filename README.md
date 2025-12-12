@@ -51,7 +51,7 @@ Application Consumer
 
 ### Core Requirements
 
-- REST endpoints for package ingestion (`/kafka/send/{id}`, `/kafka/bootstrap`)
+- REST endpoints for package ingestion (`/kafka/send/{packageId}`, `/kafka/bootstrap`)
 - Package to MappedPackage transformation
 - Cancelled package filtering
 - Kafka integration
@@ -223,19 +223,24 @@ curl http://localhost:8080/api/clusters/local/topics
 curl http://localhost:8083/connectors/mysql-package-connector/status | jq
 ```
 
-### View Application Metrics
-
-```bash
-curl http://localhost:8090/actuator/metrics
-```
-
 ## 🔄 Data Flow
 
-1. **Package Creation**: Packages are created in MySQL (via data generator or manual insert)
+### CDC Stream Path
+
+1. **Package Creation**: Packages are created and inserted in MySQL (via the data generator or manual).
 2. **CDC Capture**: Debezium captures changes and publishes to `dbserver.package_db.packages`
-3. **Stream Processing**: Kafka Streams filters and transforms to MappedPackage
-4. **Output**: Transformed messages published to `cdc-mapped-packages`
+3. **Stream Processing**: The Kafka Streams Application consumes the raw CDC events, filters out unwanted records (e.g., deleted/canceled), and performs the required logic to transform the event data into the MappedPackage format.
+4. **Output**: Transformed messages published to `cdc-mapped-packages` topic.
 5. **Consumption**: Application consumer processes final messages
+
+### Manual Ingestion Path
+
+1. **Package Creation**: Packages are created and inserted in MySQL (via the data generator or manual).
+
+2. **REST Endpoints**: Manual trigger via `/kafka/send/{packageId}`, `/kafka/bootstrap` or ingestion strategies.
+3. **Application/JPA**: Executes SQL query to fetch Package data from MySQL.
+4. **Application Logic**: Performs filtering and transformation into MappedPackage format.
+5. **Kafka**: Transformed message published directly to `mapped-package` topic.
 
 ## 🛠️ Troubleshooting
 
