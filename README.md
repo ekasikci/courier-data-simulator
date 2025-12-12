@@ -217,10 +217,11 @@ mvn test -Dtest=KafkaControllerIntegrationTest
 ```bash
 # List topics
 curl http://localhost:8080/api/clusters/local/topics
-
-# View messages in Kafka UI, navigate to:
-http://localhost:8080
 ```
+
+### View messages in Kafka UI, navigate to:
+
+http://localhost:8080
 
 ### Check Debezium Connector Status
 
